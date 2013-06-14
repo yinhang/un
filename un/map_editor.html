@@ -1,0 +1,43 @@
+<!DOCTYPE >
+<html>
+    <head>
+        <title>un-engine</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <script type="text/javascript" src="client/un.js"></script>
+        <script type="text/javascript">
+            un.tool.disableContextMenu();
+        </script>
+        <link href="style/base.css" rel="stylesheet"/>
+        <link href="style/common.css" rel="stylesheet"/>
+        <link href="style/map_editor.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <div>
+            <div class="un-engine-logo">
+                <h1 class="title"><span class="un-text">un</span>-<span class="engine-text">engine</span></h1>
+            </div>
+            <div class="content">
+                <div class="map_editor" id="mapViewer" style="">
+                    
+                </div>
+                <div class="map_tile_viewer" id="tileViewer" style="">
+                    
+                </div>
+            </div>
+            <div id="sys_control_panel">
+                <button id="ouput_mapdata">导出地图数据</button>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        un.use("un.editor.map_editor.Main", function (Main) {
+            var main = new Main({
+                imageSrc: "/res/image/caonima/youyu.png",
+                tileWidth: 32,
+                tileHeight: 48,
+                screenWidth: 480,
+                screenHeight: 320
+            });
+        });
+    </script>
+</html>
