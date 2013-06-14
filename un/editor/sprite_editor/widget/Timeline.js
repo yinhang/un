@@ -19,7 +19,7 @@ un.define(
                 self.lastFrame = null;
                 self.frameCount = 0;
                 
-                for(var i = 0, l = 600; i < l; ++ i)
+                for(var i = 0, l = 24; i < l; ++ i)
                 {
                     this.addFrame();
                 }

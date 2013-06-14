@@ -50,9 +50,6 @@ un.define(
                         }
                         self.editor = new Editor(self.editorScreen, self.tileViewer);
                         self.editor.addAction();
-                        self.editor.addAction();
-                        self.editor.addAction();
-                        self.editor.addAction();
                         self.runner.start();
                     });
                 }

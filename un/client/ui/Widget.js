@@ -123,6 +123,15 @@ un.define(
             }
         };
         
+        var dependEventList = {
+            "mouseenter": [
+                "mousemove"
+            ],
+            "mouseleave": [
+                "mousemove"
+            ]
+        };
+        
         function addEventListener(name, widget, parent) {
             var listener = eventListenerList[name];
             if(listener)
@@ -132,6 +141,14 @@ un.define(
                     listener.apply(widget, arguments);
                 };
                 parent.listen(name, widget.eventList[name]);
+                var dependEvents = dependEventList[name];
+                if(dependEvents)
+                {
+                    for(var i = 0, l = dependEvents.length; i < l; ++ i)
+                    {
+                        addEventListener(dependEvents[i], widget, parent);
+                    } 
+                }
             }
         };
         
@@ -317,38 +334,39 @@ un.define(
                     var parentContext = this.getParent() || this.getScreen();
                     if(parentContext)
                     {
-                        var parentPainterContext = parentContext.getPainter().getContext();
-                        var parentWidth = parentContext.getWidth();
-                        var parentHeight = parentContext.getHeight();
-                        var width = this.getWidth();
-                        var height = this.getHeight();
-                        var x = this.getX();
-                        var y = this.getY();
-                        var right = x + width;
-                        var bottom = y + height;
-                        var clipX = 0, clipY = 0;
-                        var drawX = x;
-                        var drawY = y;
-                        if(x > parentWidth || right < 0 || y > parentHeight || bottom < 0)
-                        {
-                            return;
-                        }
-                        if(x < 0)
-                        {
-                            clipX = x * -1;
-                            drawX = 0;
-                        }
-                        if(y < 0)
-                        {
-                            clipY = y * -1;
-                            drawY = 0;
-                        }
-                        var clipWidth = width - clipX, clipHeight = height - clipY;
-                        if(right > parentWidth)
-                            clipWidth = width - ( right - parentWidth ) - clipX;
-                        if(bottom > parentHeight)
-                            clipHeight = height - ( bottom - parentHeight ) - clipY;
-                        parentPainterContext.drawImage(this.getSource(), clipX, clipY, clipWidth , clipHeight, drawX, drawY, clipWidth, clipHeight);
+                        parentContext.getPainter().drawCanvas(this);
+                        // var parentPainterContext = parentContext.getPainter().getContext();
+                        // var parentWidth = parentContext.getWidth();
+                        // var parentHeight = parentContext.getHeight();
+                        // var width = this.getWidth();
+                        // var height = this.getHeight();
+                        // var x = this.getX();
+                        // var y = this.getY();
+                        // var right = x + width;
+                        // var bottom = y + height;
+                        // var clipX = 0, clipY = 0;
+                        // var drawX = x;
+                        // var drawY = y;
+                        // if(x > parentWidth || right < 0 || y > parentHeight || bottom < 0)
+                        // {
+                            // return;
+                        // }
+                        // if(x < 0)
+                        // {
+                            // clipX = x * -1;
+                            // drawX = 0;
+                        // }
+                        // if(y < 0)
+                        // {
+                            // clipY = y * -1;
+                            // drawY = 0;
+                        // }
+                        // var clipWidth = width - clipX, clipHeight = height - clipY;
+                        // if(right > parentWidth)
+                            // clipWidth = width - ( right - parentWidth ) - clipX;
+                        // if(bottom > parentHeight)
+                            // clipHeight = height - ( bottom - parentHeight ) - clipY;
+                        // parentPainterContext.drawImage(this.getSource(), clipX, clipY, clipWidth , clipHeight, drawX, drawY, clipWidth, clipHeight);
                     }
                 },
                 drawChildren: function () {
@@ -356,8 +374,10 @@ un.define(
                     {
                         this.redraw_childwidget_allow = false;
                         var widgetList = this.node.getChildWidgetList();
+                        //z-index
                         for(var i = 0, l = widgetList.length; i < l; ++ i)
                         {
+                            //widget
                             var subWidgetList = widgetList[i];
                             for(var ii = subWidgetList.length - 1; ii >= 0; -- ii)
                             {
