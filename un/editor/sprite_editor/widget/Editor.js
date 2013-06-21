@@ -27,7 +27,7 @@ un.define(
                         this._super.add(node);
                 },
                 addAction: function () {
-                    var timeline = new Timeline(this.tileViewer.getSprite());
+                    var timeline = new Timeline(this.tileViewer);
                     var actionList = this.getChildren();
                     var lastTimeline = actionList[actionList.length - 1];
                     if(lastTimeline)

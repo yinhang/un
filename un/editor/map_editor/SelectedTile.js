@@ -95,7 +95,7 @@ un.define(
                 },
                 draw: function () {
                     this.painter.clean();
-                    this.sprite.setX(0);
+                    this.sprite.setX(10);
                     this.sprite.setY(0);
                     this.sprite.draw(this.getPainter());
                     this.frame.draw();

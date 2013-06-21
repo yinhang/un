@@ -10,14 +10,15 @@ un.define(
             function (text, width, height) {
                 var self = this;
                 this._super(width, height);
-                this.setText(text);
                 this.painter = this.getPainter();
+                this.ctx = this.painter.getContext();
+                this.setText(text);
                 this.setSize(width > height ? height : width);
                 this.setColor("#000000");
-                this.ctx = this.painter.getContext();
                 this.selfRepaintCall = 0;
                 //标记为text节点
                 this._text_widget = true;
+                this.ctx.textBaseline = "top";
             },
             {
                 getText: function () {
@@ -25,18 +26,26 @@ un.define(
                 },
                 setColor: function (color) {
                     this.color = color;
+                    this.ctx.fillStyle = this.color;
+                    this.repaint();
                 },
                 getColor: function () {
                     return this.color;
                 },
                 setText: function (text) {
                     this.text = text;
+                    this.repaint();
                 },
                 setSize: function (size) {
                     this.size = size;
+                    this.ctx.font = this.size + "px sans-serif";
+                    this.repaint();
                 },
                 getSize: function () {
                     return this.size
+                },
+                measureSize: function () {
+                    return this.ctx.measureText(this.getText());
                 },
                 paint: function () {
                     this.painter.clean();
@@ -45,9 +54,6 @@ un.define(
                     var text = this.getText();
                     if(text && text.length > 0)
                     {
-                        this.ctx.fillStyle = this.color;
-                        this.ctx.textBaseline = "top";
-                        this.ctx.font = this.size + "px";
                         this.ctx.fillText(text, 0,  0);
                     }
                 }

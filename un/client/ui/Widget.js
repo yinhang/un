@@ -291,6 +291,12 @@ un.define(
                     } 
                     return null;
                 },
+                getViewPortX: function () {
+                    return this.getScreen().getX() + this.getScreenX();
+                },
+                getViewPortY: function () {
+                    return this.getScreen().getY() + this.getScreenY();
+                },
                 getScreenX: function () {
                     var parent = this;
                     var x = 0;
@@ -317,9 +323,6 @@ un.define(
                 },
                 paint: function () {
                     this.getPainter().clean();
-                },
-                reDraw: function () {
-                    
                 },
                 drawMe: function () {
                     //允许重绘标志==true or 拥有text子节点 则开始重绘

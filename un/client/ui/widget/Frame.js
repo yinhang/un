@@ -142,8 +142,8 @@ un.define(
                     }
                 },
                 paint: function () {
-                    this.post("update", this);
                     this.painter.clean();  
+                    this.post("update", this);
                 }
             },
             Widget

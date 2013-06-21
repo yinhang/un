@@ -12,7 +12,7 @@ un.define(
 	    var TileViewer = Class.define(
 	        function (parent, sprite) {
 	            var self = this;
-	            this._super(parent, sprite.getWidth() * 3, sprite.getHeight() * Math.ceil( sprite.getMaxFrame() / 3 ));
+	            this._super(parent, sprite.getImage().getWidth(), sprite.getImage().getHeight());
                 this.setSprite(sprite);
 	            this.painter = this.getPainter();
 	            parent.style.width = this.getWidth() + "px";
@@ -68,16 +68,16 @@ un.define(
 	                return this.sprite;
 	            },
 	            setSprite: function (sprite) {
-                    this.map = new Map(sprite, sprite.getWidth() * 3, sprite.getHeight() * Math.ceil( sprite.getMaxFrame() / 3 ));
+                    this.map = new Map(sprite, this.getWidth(), this.getHeight());
                     this.setWidth(this.map.getWidth());
                     this.setHeight(this.map.getHeight());
                     this.sprite = sprite;
                     var mapArr = [];
                     var maxFrame = this.sprite.getMaxFrame();
-                    for(var i = 0; i < maxFrame; i += 3)
+                    for(var i = 0; i < maxFrame; i += this.getWidth() / this.sprite.getWidth())
                     {
                         var lv2Arr = [];
-                        for(var ii = i + 1, ll = ii + 3; ii < ll && ii <= maxFrame; ++ ii)
+                        for(var ii = i + 1, ll = ii + this.getWidth() / this.sprite.getWidth(); ii < ll && ii <= maxFrame; ++ ii)
                         {
                             lv2Arr.push(ii); 
                         }
